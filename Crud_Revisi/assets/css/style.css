@@ -1,0 +1,14 @@
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.table thead th {
+    background-color: #f8fafc; /* Abu-abu sangat muda */
+    border-bottom: 2px solid #dee2e6;
+    border-top: none;
+}
+.table td, .table th {
+    padding: 1rem; /* Tambahkan ruang */
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+}
