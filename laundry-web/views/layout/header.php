@@ -22,11 +22,11 @@
           <a class="nav-link" href="index.php?page=outlet">Outlet</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.php?page=user">User</a>
+          <a class="nav-link" href="index.php?page=user">Login</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="index.php?page=transaksi">Transaksi</a>
-        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="index.php?page=transaksi">Me</a>
+        </li> -->
       </ul>
       
     </div>

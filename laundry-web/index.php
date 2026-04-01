@@ -26,7 +26,7 @@ switch ($page) {
         include 'views/outlet/index.php';
         break;
     case 'user':
-        include 'views/user/index.php';
+        include 'views/login/index.php';
         break;
     case 'transaksi':
         include 'views/transaksi/index.php';
@@ -111,6 +111,9 @@ switch ($page) {
                 </div>
             </div>
         </div>
+
+                
+
         <?php
         
         break;
