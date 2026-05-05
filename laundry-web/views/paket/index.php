@@ -1,18 +1,17 @@
 <?php
-// Ambil data outlet dari database
-$data_outlet = getAllOutlet($conn);
+$data_paket = getAllPaket($conn);
 $role = $_SESSION['role'];
 ?>
 
 <div class="row mb-4 align-items-center">
     <div class="col-md-6">
-        <h2 class="display-6 text-uppercase fw-bold mb-0">Data <span class="text-success">Outlet</span></h2>
-        <p class="text-muted mb-0">Daftar cabang dan lokasi operasional LaundryKu.</p>
+        <h2 class="display-6 text-uppercase fw-bold mb-0">Data <span class="text-primary">Paket</span></h2>
+        <p class="text-muted mb-0">Daftar layanan cucian (Paket) yang tersedia.</p>
     </div>
     <div class="col-md-6 text-end">
         <?php if($role === 'admin'): ?>
-        <a href="index.php?page=outlet_tambah" class="btn btn-dark shadow-sm px-4 rounded-pill">
-             <i class="bi bi-plus-circle me-2"></i>Daftarkan Outlet Baru
+        <a href="index.php?page=paket_tambah" class="btn btn-dark shadow-sm px-4 rounded-pill">
+             <i class="bi bi-plus-circle me-2"></i>Tambah Paket Baru
         </a>
         <?php endif; ?>
     </div>
@@ -21,36 +20,38 @@ $role = $_SESSION['role'];
 <div class="card border-0 shadow-sm" style="border-radius: 15px; overflow: hidden;">
     <div class="card-body p-4">
         <div class="table-responsive">
-            <table id="tabelOutlet" class="table table-hover align-middle mb-0">
+            <table id="tabelPaket" class="table table-hover align-middle mb-0">
                 <thead class="table-dark small text-uppercase">
                     <tr>
                         <th class="px-4 py-3">No</th>
-                        <th class="py-3">Nama Cabang</th>
-                        <th class="py-3">Telepon</th>
-                        <th class="py-3">Alamat Lengkap</th>
+                        <th class="py-3">Outlet</th>
+                        <th class="py-3">Nama Paket</th>
+                        <th class="py-3">Jenis</th>
+                        <th class="py-3">Harga</th>
                         <th class="py-3 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
                     $no = 1;
-                    if(mysqli_num_rows($data_outlet) > 0) :
-                        while($row = mysqli_fetch_assoc($data_outlet)) : 
+                    if(mysqli_num_rows($data_paket) > 0) :
+                        while($row = mysqli_fetch_assoc($data_paket)) : 
                     ?>
                     <tr>
                         <td class="px-4 text-muted fw-bold"><?= $no++; ?></td>
-                        <td class="fw-semibold text-success"><?= $row['nama']; ?></td>
-                        <td><?= $row['tlp']; ?></td>
-                        <td class="text-muted small"><?= $row['alamat']; ?></td>
+                        <td class="text-muted"><?= $row['nama_outlet']; ?></td>
+                        <td class="fw-semibold text-primary"><?= $row['nama_paket']; ?></td>
+                        <td><span class="badge bg-secondary text-capitalize"><?= str_replace('_', ' ', $row['jenis']); ?></span></td>
+                        <td class="fw-bold">Rp <?= number_format($row['harga'],0,',','.'); ?></td>
                         <td class="text-center">
                             <?php if($role === 'admin'): ?>
                             <div class="btn-group shadow-sm" style="border-radius: 8px; overflow: hidden;">
-                                <a href="index.php?page=outlet_edit&id=<?= $row['id']; ?>" class="btn btn-sm btn-outline-warning border-0 px-3">
+                                <a href="index.php?page=paket_edit&id=<?= $row['id']; ?>" class="btn btn-sm btn-outline-warning border-0 px-3">
                                     Edit
                                 </a>
-                                <a href="index.php?page=outlet&hapus_outlet=<?= $row['id']; ?>"
+                                <a href="index.php?page=paket&hapus_paket=<?= $row['id']; ?>"
                                    class="btn btn-sm btn-outline-danger border-0 px-3"
-                                   onclick="return confirm('Hapus cabang ini?')">
+                                   onclick="return confirm('Hapus paket ini?')">
                                     Hapus
                                 </a>
                             </div>
@@ -68,31 +69,18 @@ $role = $_SESSION['role'];
         </div>
     </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-
 <script>
 $(document).ready(function() {
-    $('#tabelOutlet').DataTable({
+    $('#tabelPaket').DataTable({
         "paging": false,
         "searching": false,
         "info": false,
-        "language": {
-            "zeroRecords": "Outlet tidak ditemukan"
-        },
         "columnDefs": [
-            { "orderable": false, "targets": 4 }
+            { "orderable": false, "targets": 5 }
         ]
     });
 });
 </script>
-
-<style>
-    .dataTables_filter { display: none; }
-    .pagination .page-item.active .page-link {
-        background-color: #198754;
-        border-color: #198754;
-    }
-</style>

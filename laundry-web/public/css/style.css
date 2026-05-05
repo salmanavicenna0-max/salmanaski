@@ -1,83 +1,52 @@
-.container {
-  padding: 80px 120px;
-}
-.person {
-  border: 10px solid transparent;
-  margin-bottom: 25px;
-  width: 80%;
-  height: 80%;
-  opacity: 0.7;
-}
-.person:hover {
-  border-color: #f1f1f1;
+/* Container Utama Layout */
+.wrapper {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
 }
 
-.carousel-inner img {
-  width: 1000px;
-  height: 700px;
-  object-fit: cover;
-  border-radius: 90px;
+/* Sidebar */
+#sidebar {
+    min-width: 260px;
+    max-width: 260px;
+    height: 100vh;
+    position: fixed; /* Tetap fixed agar tidak ikut scroll */
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    transition: all 0.3s ease;
 }
-          .hero-section {
-                display: flex;
-                align-items: center;
-                gap: 50px;
-                margin-bottom: 60px;
-                text-align: justify;
-            }
-            .hero-text {
-                flex: 1;
-            }
-            .hero-text h1 {
-                font-size: 3em;
-                font-weight: bold;
-                margin-bottom: 20px;
-                color: #333;
-            }
-            .hero-text p {
-                font-size: 1.1em;
-                line-height: 1.6;
-                color: #666;
-            }
-            .hero-carousel {
-                flex: 1;
-            }
 
-            .divider:after,
-            .divider:before {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: #eee;
-            }
-            .h-custom {
-            height: calc(100% - 73px);
-            }
-            @media (max-width: 450px) {
-            .h-custom {
-            height: 100%;
-            }
-            }
+/* Kondisi Sidebar Sembunyi di HP */
+@media (max-width: 991.98px) {
+    #sidebar {
+        margin-left: -260px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+}
 
-            .gradient-custom-2 {
-              /* fallback for old browsers */
-              background: #fccb90;
-              
-              /* Chrome 10-25, Safari 5.1-6 */
-              background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
-              
-              /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-              background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
-              }
-              
-              @media (min-width: 768px) {
-              .gradient-form {
-              height: 100vh !important;
-              }
-              }
-              @media (min-width: 769px) {
-              .gradient-custom-2 {
-              border-top-right-radius: .3rem;
-              border-bottom-right-radius: .3rem;
-              }
-              }
+/* Main Content */
+.main-content {
+    width: 100%;
+    min-height: 100vh;
+    margin-left: 260px; /* Jarak pas laptop */
+    transition: all 0.3s ease;
+}
+
+/* Pas di HP, main-content ga boleh ada margin kiri! */
+@media (max-width: 991.98px) {
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+.top-navbar {
+    height: 70px;
+    background: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    border-bottom: 1px solid #eee;
+}

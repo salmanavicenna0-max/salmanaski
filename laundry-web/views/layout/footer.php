@@ -1,10 +1,30 @@
-<footer class="py-3 my-4">
-  <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary"><img src="https://img.freepik.com/premium-vector/instagram-logo-icon_1273375-1177.jpg?semt=ais_incoming&w=740&q=80" width="50px"></a></li>
-    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary"><img src="https://static.vecteezy.com/system/resources/thumbnails/018/930/574/small/tiktok-logo-tikok-icon-transparent-tikok-app-logo-free-png.png" width="50px"></a></li>
-    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary"></a></li>
-    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary"></a></li>
-    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary"></a></li>
-  </ul>
-  <p class="text-center text-body-secondary">© 2025 XIPPLG1, Salman Avin</p>
+<footer class="py-0 my-4">
+ 
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('sidebarToggle');
+
+    if(toggleBtn) {
+        toggleBtn.addEventListener('click', function() {
+            // Pasang/Lepas class 'active'
+            sidebar.classList.toggle('active');
+        });
+    }
+
+    // Klik di luar sidebar buat nutup (khusus mobile)
+    document.addEventListener('click', function(event) {
+        const isClickInside = sidebar.contains(event.target) || toggleBtn.contains(event.target);
+        
+        if (!isClickInside && window.innerWidth < 992 && sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+        }
+    });
+});
+</script>
+  <p class="text-center text-body-secondary">Copyright 2026 <br>XIPPLG1, Salman Avin</p>
 </footer>

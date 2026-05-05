@@ -1,83 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-<style>
-    .img-fluid {
-        width: 500px;
-        border-radius: 5%;
-    }
-</style>
-</head>
-<body>
+<?php 
+// Ambil data user menggunakan fungsi yang ada di functions.php
+$data_user = getAllUser($conn); 
+?>
 
-    <form method="post">
-  <!-- Section: Design Block -->
-<section class="">
-  <!-- Jumbotron -->
-  <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
-    <div class="container">
-      <div class="row gx-lg-5 align-items-center">
-        <div class="col-lg-6 mb-5 mb-lg-0">
-          <h1 class="my-5 display-3 fw-bold ls-tight">
-            The best offer <br />
-            <span class="text-primary">for your business</span>
-          </h1>
-          <p style="color: hsl(217, 10%, 50.8%)">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Eveniet, itaque accusantium odio, soluta, corrupti aliquam
-            quibusdam tempora at cupiditate quis eum maiores libero
-            veritatis? Dicta facilis sint aliquid ipsum atque?
-          </p>
-        </div>
-
-        <div class="col-lg-6 mb-5 mb-lg-0">
-          <div class="card">
-            <div class="card-body py-5 px-md-5">
-              <form>
-                <!-- 2 column grid layout with text inputs for the first and last names -->
-               
-
-                <div class="form-row">
-                <div data-mdb-input-init class="form-outline mb-4">
-                <label for="useername"></label>
-                <input type="username" class="form-control" id="inputEmail4" placeholder="Username">
-                </div>    
-                
-                <div class="form-row">
-                <div data-mdb-input-init class="form-outline mb-4">
-                <label for="Email"></label>
-                <input type="Email" class="form-control" id="inputEmail4" placeholder="Email">
-                </div>    
-
-                <div data-mdb-input-init class="form-outline mb-4">
-                <label for="inputPassword4"></label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                </div>
-                </div>
-                <div class="pt-1 mb-4">
-                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-dark btn-lg btn-block" type="button">Login</button>
-                  </div>
-
-                  <a class="small text-muted" href="#!">Forgot password?</a>
-                  <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="#!"
-                      style="color: #393f81;">Register here</a></p>
-
-               
-
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="row mb-4 align-items-center">
+    <div class="col-md-6">
+        <h2 class="display-6 text-uppercase fw-bold mb-0">Data <span class="text-primary">Pengguna</span></h2>
+        <p class="text-muted mb-0">Manajemen akun staff</p>
     </div>
-  </div>
-    
-</section>
+    <div class="col-md-6 text-end">
+        <a href="index.php?page=user_tambah" class="btn btn-dark shadow-sm px-4 rounded-pill">
+             <i class="bi bi-person-plus-fill me-2"></i>Tambah User
+        </a>
+    </div>
+</div>
 
-    </form>
+<div class="card border-0 shadow-sm" style="border-radius: 15px; overflow: hidden;">
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table id="tabelUser" class="table table-hover align-middle mb-0">
+                <thead class="table-dark small">
+                    <tr>
+                        <th class="px-4 py-3">No</th>
+                        <th class="py-3">Nama</th>
+                        <th class="py-3">Username</th>
+                        <th class="py-3">Role</th>
+                        <th class="py-3">Outlet</th>
+                        <th class="py-3 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    $no = 1;
+                    while($row = mysqli_fetch_assoc($data_user)) : 
+                    ?>
+                    <tr>
+                        <td class="px-4 text-muted fw-bold"><?= $no++; ?></td>
+                        <td class="fw-semibold"><?= $row['nama']; ?></td>
+                        <td><code class="text-primary"><?= $row['username']; ?></code></td>
+                        <td>
+                            <span class="badge rounded-pill bg-opacity-10 <?= $row['role'] == 'admin' ? 'bg-danger text-danger' : 'bg-success text-success' ?> px-3">
+                                <?= strtoupper($row['role']); ?>
+                            </span>
+                        </td>
+                        <td>
+                            <i class="bi bi-geo-alt me-1 text-muted"></i>
+                            <?= $row['nama_outlet'] ? $row['nama_outlet'] : '<span class="text-muted small italic">Semua Outlet</span>'; ?>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group shadow-sm" style="border-radius: 8px; overflow: hidden;">
+                                <a href="index.php?page=user_edit&id=<?= $row['id']; ?>" class="btn btn-sm btn-outline-warning border-0 px-3">Edit</a>
+                                <a href="index.php?page=user&hapus_user=<?= $row['id']; ?>" class="btn btn-sm btn-outline-danger border-0 px-3" onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-</body>
-</html>
+<script>
+$(document).ready(function() {
+    if ($.fn.DataTable.isDataTable('#tabelUser')) {
+        $('#tabelUser').DataTable().destroy();
+    }
+    $('#tabelUser').DataTable({
+        "pageLength": 10,
+        "language": {
+            "search": "Cari Pengguna:",
+            "lengthMenu": "Tampilkan _MENU_ data",
+            "zeroRecords": "Data tidak ditemukan",
+            "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ user",
+            "paginate": { "next": "Lanjut", "previous": "Balik" }
+        },
+        "columnDefs": [ { "orderable": false, "targets": 5 } ]
+    });
+});
+</script>
